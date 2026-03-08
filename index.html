@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Student Course Registration</title>
+<style>
+body{
+background:#111;
+color:#eee;
+font-family:Arial;
+}
+.container{
+width:600px;
+margin:auto;
+background:#1e1e1e;
+padding:20px;
+margin-top:40px;
+}
+input,select,textarea,button{
+width:100%;
+padding:8px;
+margin-top:5px;
+margin-bottom:15px;
+background:#222;
+color:#eee;
+border:1px solid #444;
+}
+.radio-group input,.checkbox-group input{
+width:auto;
+margin-right:5px;
+}
+#roomBox{
+display:none;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+<h2>Course Registration</h2>
+
+<form onsubmit="return validateForm()">
+
+<label>Roll Number</label>
+<input type="text" id="roll">
+
+<label>Name</label>
+<input type="text" id="name">
+
+<label>Gender</label>
+<div class="radio-group">
+<input type="radio" name="gender">Male
+<input type="radio" name="gender">Female
+<input type="radio" name="gender">Other
+</div>
+
+<label>Department</label>
+<select id="dept">
+<option>CSE</option>
+<option>ECE</option>
+<option>MECH</option>
+<option>CIVIL</option>
+</select>
+
+<label>Select Courses</label>
+<select id="courses" multiple size="5">
+<option>Data Structures</option>
+<option>Operating Systems</option>
+<option>Database Systems</option>
+<option>Computer Networks</option>
+<option>Machine Learning</option>
+</select>
+
+<div class="checkbox-group">
+<input type="checkbox" id="lab">Lab Required
+</div>
+
+<div class="checkbox-group">
+<input type="checkbox" id="hostel" onchange="toggleRoom()">Hostel Required
+</div>
+
+<div id="roomBox">
+<label>Room Preference</label>
+<select id="room">
+<option>Single</option>
+<option>Double</option>
+<option>Triple</option>
+</select>
+</div>
+
+<label>Feedback</label>
+<textarea id="feedback"></textarea>
+
+<button type="submit">Register</button>
+
+</form>
+</div>
+
+<script>
+function toggleRoom(){
+var hostel=document.getElementById("hostel").checked;
+var roomBox=document.getElementById("roomBox");
+if(hostel){
+roomBox.style.display="block";
+}else{
+roomBox.style.display="none";
+}
+}
+
+function validateForm(){
+var roll=document.getElementById("roll").value.trim();
+var feedback=document.getElementById("feedback").value.trim();
+var courses=document.getElementById("courses");
+
+var pattern=/^[A-Za-z]{2}[0-9]{3}$/;
+if(!pattern.test(roll)){
+alert("Invalid Roll Number");
+return false;
+}
+
+var count=0;
+for(var i=0;i<courses.options.length;i++){
+if(courses.options[i].selected){
+count++;
+}
+}
+
+if(count<2){
+alert("Select at least 2 courses");
+return false;
+}
+
+if(feedback.length<50){
+alert("Feedback must be at least 50 characters");
+return false;
+}
+
+alert("Registration Successful");
+return true;
+}
+</script>
+
+</body>
+</html>
